@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Next.js build output
+.next/
+
+# Environment variables
+.env
+
+# Log files
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Uploads
+directoryuploads/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Other
+.idea/
+.vscode/ 

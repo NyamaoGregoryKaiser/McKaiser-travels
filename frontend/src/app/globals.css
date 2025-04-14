@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors duration-300;
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-100 text-blue-600 font-medium py-2 px-4 rounded border border-white transition-colors duration-300;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent hover:bg-gray-100 text-blue-600 font-medium py-2 px-4 rounded border border-blue-600 transition-colors duration-300;
+  }
+  
+  .btn-outline-white {
+    @apply bg-transparent hover:bg-white/20 text-white font-medium py-2 px-4 rounded border border-white transition-colors duration-300;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden;
+  }
+  
+  .form-input {
+    @apply w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none;
+  }
+}
+
+/* Loading Spinner */
+.spinner {
+  border: 3px solid rgba(55, 65, 81, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid #3b82f6;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 
