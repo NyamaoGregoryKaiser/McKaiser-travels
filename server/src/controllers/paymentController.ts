@@ -117,11 +117,11 @@ export const initiateSTKPush = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error) {
-    console.error('Error initiating STK push:', error);
+    console.error('Error initiating STK push:', error as any);
     return res.status(500).json({
       success: false,
       message: 'Failed to initiate M-Pesa payment',
-      error: error.response?.data || error.message,
+      error: (error as any).response?.data || (error as any).message,
     });
   }
 };
@@ -135,7 +135,7 @@ export const mpesaCallback = async (req: Request, res: Response) => {
     // Check if transaction was successful
     if (Body.stkCallback.ResultCode === 0) {
       // Transaction successful
-      const transactionDetails = Body.stkCallback.CallbackMetadata.Item.reduce((acc, item) => {
+      const transactionDetails = Body.stkCallback.CallbackMetadata.Item.reduce((acc: Record<string, any>, item: { Name: string, Value: any }) => {
         if (item.Name) {
           acc[item.Name] = item.Value;
         }
@@ -156,7 +156,7 @@ export const mpesaCallback = async (req: Request, res: Response) => {
       return res.status(200).json({ success: false });
     }
   } catch (error) {
-    console.error('Error processing M-Pesa callback:', error);
+    console.error('Error processing M-Pesa callback:', error as any);
     return res.status(500).json({ success: false });
   }
 };
@@ -203,11 +203,11 @@ export const checkTransactionStatus = async (req: Request, res: Response) => {
       data: response.data,
     });
   } catch (error) {
-    console.error('Error checking transaction status:', error);
+    console.error('Error checking transaction status:', error as any);
     return res.status(500).json({
       success: false,
       message: 'Failed to check transaction status',
-      error: error.response?.data || error.message,
+      error: (error as any).response?.data || (error as any).message,
     });
   }
 }; 

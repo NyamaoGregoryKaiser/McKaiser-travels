@@ -12,6 +12,10 @@ interface AuthRequest extends Request {
 // JWT secret key
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
+function isIUser(user: any): user is IUser {
+    return user && typeof user.name === 'string' && typeof user.email === 'string' && typeof user.role === 'string';
+}
+
 // Middleware to protect routes
 export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
   let token;
@@ -26,7 +30,12 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
       const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
 
       // Find user and attach to request
-      req.user = await User.findById(decoded.id).select('-password');
+      const user = await User.findById(decoded.id).select('-password').lean();
+      if (isIUser(user)) {
+        req.user = user;
+      } else {
+        req.user = null;
+      }
 
       next();
     } catch (error) {

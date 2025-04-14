@@ -1,11 +1,16 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-export interface IUser extends Document {
+// Create a separate interface for the user document structure
+export interface IUserDocument {
   name: string;
   email: string;
   password: string;
   role: 'user' | 'admin';
+}
+
+// Create interface that extends Document for the model type
+export interface IUser extends IUserDocument, Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -52,4 +57,4 @@ UserSchema.methods.comparePassword = async function(candidatePassword: string): 
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export default mongoose.model<IUser>('User', UserSchema); 
+export default mongoose.model<IUser>('User', UserSchema);

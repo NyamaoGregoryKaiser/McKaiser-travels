@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import User, { IUser } from '../models/User'; // Import IUser interface
 
+// Extend Express Request interface
 interface AuthRequest extends Request {
-  user?: any;
+  user?: IUser;
 }
 
 export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -25,9 +26,10 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
       return res.status(401).json({ message: 'No user found with this id' });
     }
 
-    req.user = user;
+    // Use type assertion to avoid TypeScript errors
+    req.user = user.toObject ? user.toObject() as IUser : user as unknown as IUser;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Not authorized to access this route' });
   }
-}; 
+};
